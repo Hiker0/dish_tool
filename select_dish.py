@@ -46,13 +46,14 @@ def main(src):
             print('%s erro postfix' % (file))
             i = i+1
             continue
+        finished = len(true_list)+len(false_list)
+        winname = file+"    "+str(finished)+"/"+str(filenum)
         try:
             image = cv2.imread(file_path)
-            cv2.namedWindow(file, 0);
-            cv2.resizeWindow(file, 640, 480);
-            cv2.moveWindow(file, 100, 100)
-            cv2.imshow(file, image)
-            finished = len(true_list)+len(false_list)
+            cv2.namedWindow(winname, 0);
+            cv2.resizeWindow(winname, 640, 480);
+            cv2.moveWindow(winname, 100, 100)
+            cv2.imshow(winname, image)
             print('total:%d, finished :%d, true: %d, false:%d left:%d' % \
 				(filenum, finished, len(true_list), len(false_list), filenum-finished))
             sys.stdout.flush()
@@ -79,7 +80,7 @@ def main(src):
                 print('%s success' % (file))
                 i = i + 1
 
-            cv2.destroyWindow(file)
+            cv2.destroyWindow(winname)
         except cv2.error:
             i = i+1
         

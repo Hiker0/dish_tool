@@ -96,15 +96,23 @@ def hamming_distance(first, second):
 
 #--------------------------------
 
-#能够处理的图片后缀
 def picPostfix():  # 相册后缀的集合
+    """能够处理的图片后缀
+
+    :return:
+    """
     postFix = set()
     postFix.update(['bmp', 'jpg', 'png', 'tiff', 'gif', 'pcx', 'tga', 'exif',
                     'fpx', 'svg', 'psd', 'cdr', 'pcd', 'dxf', 'ufo', 'eps', 'JPG', 'raw', 'jpeg'])
     return postFix
 
-#判断是否有重复
 def foundSame(file_name, hash):
+    """判断是否有重复
+
+    :param file_name:
+    :param hash:
+    :return:
+    """
     for i in range(len(allDiff)):
         ans = hamming_distance(allDiff[i][1], hash)
         #print ('[%s]\t[%s]\t%s'%(allDiff[i][0], file_name, ans))
@@ -113,16 +121,24 @@ def foundSame(file_name, hash):
            return True
     return False
 
-#处理重复图片
 def processSame(file_name):
+    """处理重复图片
+
+    :param file_name:
+    :return:
+    """
     global totalDup
     totalDup = totalDup + 1
 	
 	#TODO 在这里处理重复图片
     #print ('%s is duplicate'%(file_name))
-    
-#建立字典
+
 def gethash(file_name):
+    """建立字典
+
+    :param file_name:
+    :return:
+    """
     if file_name.split('.')[-1] in postFix:  # 判断后缀是不是照片格式
         try:
             im = Image.open(file_name) 
@@ -134,8 +150,13 @@ def gethash(file_name):
                 processSame(file_name)
         except OSError:
             pass
-#遍历文件夹
+
 def processDir(file_dir):
+    """遍历文件夹
+
+    :param file_dir:
+    :return:
+    """
     global totalNum
     print('root %s'%(file_dir))   
     for file in os.listdir(file_dir):
@@ -154,6 +175,7 @@ if __name__ == '__main__':
     postFix = picPostfix()                 #  图片后缀的集合
     parser = argparse.ArgumentParser()
     parser.add_argument("--src", help="src dir to work")
+    parser.add_argument("--option", help="option to handle similar pictures")
     args = parser.parse_args()
     
     dirName = args.src
