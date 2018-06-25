@@ -131,7 +131,8 @@ def processSame(file_name):
     totalDup = totalDup + 1
 	
 	#TODO 在这里处理重复图片
-    #print ('%s is duplicate'%(file_name))
+    print ('%s is duplicate'%(file_name))
+    os.remove(file_name)
 
 def gethash(file_name):
     """建立字典
@@ -160,11 +161,12 @@ def processDir(file_dir):
     global totalNum
     print('root %s'%(file_dir))   
     for file in os.listdir(file_dir):
+        path = os.path.join(file_dir, file)
         if os.path.isdir(file):
-            processDir(r'%s/%s'%(file_dir, file))
+            processDir(path)
         else:
             totalNum = totalNum + 1
-            gethash(r'%s/%s'%(file_dir, file))
+            gethash(path)
             #print (file)
 
 if __name__ == '__main__':
